@@ -1,0 +1,41 @@
+<header>
+    <mat-toolbar class="menu mat-elevation-z8">
+        <!-- <mat-icon>assignment_ind</mat-icon> -->
+        <div fxShow="true" fxHide.lt-md>
+            <img alt="profile" class="profile-logo" src="assets/images/iconos/user-icon.svg">
+        </div>
+        <div fxShow="true" fxHide.lt-md>
+            <ul class="nav-list" id="nav-perfil">
+                <li class="nav-item" [ngClass]="{'active': (ruta === '/perfil')}">
+                    <a href="/perfil" class="nav-link">Perfil</a>
+                </li>
+                <li class="nav-item" [ngClass]="{'active': (ruta === '/skills')}">
+                    <a href="/skills" class="nav-link">Habilidades</a>
+                </li>
+                <li class="nav-item" [ngClass]="{'active': (ruta === '/jobs')}">
+                    <a href="/jobs" class="nav-link">Experiencia</a>
+                </li>
+            </ul>
+        </div>
+        <span class="flex-spacer" fxShow="true" fxHide.lt-md></span>
+        <div fxShow="true" fxHide.gt-sm>
+            <img alt="profile" class="profile-logo-responsive" src="assets/images/iconos/user-icon.svg">
+        </div>
+        <span class="name">Manuel Fernando Muñoz</span>
+        <span class="flex-spacer" fxShow="true" fxHide.gt-sm></span>
+        <button mat-icon-button [matMenuTriggerFor]="appMenu" fxShow="true" fxHide.gt-sm>
+            <mat-icon>menu</mat-icon>
+        </button>
+    </mat-toolbar>
+    <mat-menu #appMenu="matMenu" class="menu-list">
+        <button mat-menu-item [ngClass]="{'active': (ruta === '/perfil')}" onclick="window.location.href='/perfil'">
+            Perfil
+        </button>
+        <button mat-menu-item [ngClass]="{'active': (ruta === '/skills')}" onclick="window.location.href='/skills'">
+            Habilidades
+        </button>
+        <button mat-menu-item [ngClass]="{'active': (ruta === '/jobs')}" onclick="window.location.href='/jobs'">
+            Experiencia
+        </button>
+    </mat-menu>
+</header>

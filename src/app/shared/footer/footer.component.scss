@@ -1,0 +1,56 @@
+@import '../../../sass/variables';
+
+footer{
+	display: block;
+	background-color: $second-color;
+	color: $text-third-color;
+	padding: .2em 0;
+}
+.social-text{
+	text-decoration: none;
+	color: $text-third-color;
+}
+a.social-text:hover{
+	color: $text-first-color;
+}
+.icon{
+    padding-right:16px;
+    width: 40px;
+    display: block;
+}
+.social-networks {
+	height:55px;
+	width: 100%;
+	margin-right: 0px;
+    margin-left: 0px;
+	display:-webkit-box;
+	display:-ms-flexbox;
+	display:flex;
+	align-items: center;
+	-webkit-box-pack:center;
+	-ms-flex-pack:center;	
+}
+.col-md-4 {
+	display: flex;
+	align-content: center;
+	align-items: center;
+	justify-content:center;
+}
+.mail:hover{
+	content: url("../../../assets/images/iconos/mail-white-icon.svg");
+	width: 40px;
+	padding-right: 16px;
+}
+.linkedin:hover{
+	content: url("../../../assets/images/iconos/linkedin-white-icon.svg");
+	width: 40px;
+	padding-right: 16px;
+}
+@media (max-width: 595px) {
+	.social-networks{
+		display: contents;
+	}
+	.col-xs-12 {
+		margin: 10px auto;
+	}
+}

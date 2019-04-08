@@ -1,0 +1,19 @@
+@import '../../sass/variables';
+
+.perfil{
+    padding-bottom: 10px;
+}
+
+.description{
+    text-align: justify;
+    color: $text-third-color;
+    padding-top: 15px;
+}
+.own-image{
+    width: 160px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 200px;
+    display: flex;
+    vertical-align: middle;
+}
