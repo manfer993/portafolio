@@ -9,6 +9,18 @@ node {
         stage('Build'){
                 sh "npm run build"
         }
+        stage('sonar-scanner') {
+                def sonarqubeScannerHome = tool name: 'sonarqube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarLogin')]) {
+                        sh "${sonarqubeScannerHome}/bin/sonar-scanner -e 
+                        -Dsonar.projectKey=angular_app_portafolio \
+                        -Dsonar.host.url=http://52.191.197.9:9100 \
+                        -Dsonar.login=${sonarLogin} \
+                        -Dsonar.projectName=portafolio \
+                        -Dsonar.sources=src/app \
+                        -Dsonar.test=src/app"
+                }
+        }
 //        stage('Deploy'){
 //                sh "pm2 restart all"
 //        }
