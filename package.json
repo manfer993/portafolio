@@ -1,8 +1,8 @@
 {
   "name": "portafolio",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "engines": {
-    "node": "8.12.0",
+    "node": "10.15.3",
     "npm": "6.4.1"
   },
   "scripts": {
