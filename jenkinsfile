@@ -1,10 +1,5 @@
 // This shows a simple example of how to archive the build output artifacts.
 node {
-        stage('Install nodejs'){
-                sh "apt-get install curl software-properties-common"
-                sh "curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -"
-                sh "apt-get install nodejs"
-        }
         stage('Checkout repository'){
                 git branch: 'development', url: 'https://github.com/manfer993/portafolio.git'
         }
