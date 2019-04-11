@@ -1,2 +1,3 @@
 FROM nginx:alpine
-COPY /app/dist/* /usr/share/nginx/html/
+WORKDIR /usr/share/nginx/html/
+COPY /app/dist/* .
