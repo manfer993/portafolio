@@ -1,3 +1,3 @@
 FROM nginx:alpine
 WORKDIR /app/dist/portafolio/
-COPY . /usr/share/nginx/html/
+COPY --from=build-stage . /usr/share/nginx/html
