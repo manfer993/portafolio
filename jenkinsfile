@@ -10,12 +10,12 @@ node {
                 sh "npm run build"
         }
          stage('sonar-scanner') {
-                 def sonarqubeScannerHome = tool name: 'sonarqube_dev', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                 withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarLogin')]) {
+                 def sonarqubeScannerHome = tool name: 'sonarqube 3.3.0', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                 withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqube_dev')]) {
                          sh "${sonarqubeScannerHome}/bin/sonar-scanner -e \
-                         -Dsonar.projectKey=test_NodeJs_App \
-                         -Dsonar.projectName= test_NodeJs_App \
-                         -Dsonar.projectVersion= 1.0 \
+                         -Dsonar.projectKey=test_NodeJs_Pipeline \
+                         -Dsonar.projectName= test_NodeJs_Pipeline \
+                         -Dsonar.projectVersion= 0.1 \
                          -Dsonar.sourceEncoding=UTF-8 \
                          -Dsonar.sources=src \
                          -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts,**/dist/**,**/docs/**,**/*.js,**/e2e/**,**/coverage/** \
