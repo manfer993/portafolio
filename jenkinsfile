@@ -9,18 +9,21 @@ node {
         stage('Build'){
                 sh "npm run build"
         }
-        // stage('sonar-scanner') {
-        //         def sonarqubeScannerHome = tool name: 'sonarqube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-        //         withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarLogin')]) {
-        //                 sh "${sonarqubeScannerHome}/bin/sonar-scanner -e \
-        //                 -Dsonar.projectKey=angular_app_portafolio \
-        //                 -Dsonar.host.url=http://52.191.197.9:9100 \
-        //                 -Dsonar.login=${sonarLogin} \
-        //                 -Dsonar.projectName=portafolio \
-        //                 -Dsonar.sources=src/app \
-        //                 -Dsonar.test=src/app"
-        //         }
-        // }
+         stage('sonar-scanner') {
+                 def sonarqubeScannerHome = tool name: 'sonarqube_dev', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                 withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarLogin')]) {
+                         sh "${sonarqubeScannerHome}/bin/sonar-scanner -e \
+                         -Dsonar.projectKey=test_NodeJs_App \
+                         -Dsonar.projectName= test_NodeJs_App \
+                         -Dsonar.projectVersion= 1.0 \
+                         -Dsonar.sourceEncoding=UTF-8 \
+                         -Dsonar.sources=src \
+                         -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts,**/dist/**,**/docs/**,**/*.js,**/e2e/**,**/coverage/** \
+                         -Dsonar.test=src/app \
+                         -Dsonar.test.inclusions=**/*.spec.ts \
+                         -Dsonar.ts.tslint.configPath=tslint.json "
+                 }
+         }
 //        stage('Deploy'){
 //                sh "pm2 restart all"
 //        }
