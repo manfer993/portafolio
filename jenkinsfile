@@ -25,7 +25,7 @@ node {
                 }
         }
         stage('docker build/push') {
-                docker.withRegistry('https://index.docker.io/v2/', 'dockerHub') {
+                docker.withRegistry('','dockerHub') {
                         def app = docker.build("ferman18/nodejs_app_dev:${BUILD_NUMBER}", '.').push()
                 }
         }
