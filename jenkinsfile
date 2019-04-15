@@ -12,16 +12,16 @@ node {
         stage('sonar-scanner') {
                 def scannerHome = tool 'sonarqube 3.3.0'
                 withSonarQubeEnv('sonarqube_dev') {
-                        sh "${scannerHome}/bin/sonar-scanner"// -e \
-                        //  -Dsonar.projectKey=test_NodeJs_Pipeline \
-                        //  -Dsonar.projectName= test_NodeJs_Pipeline \
-                        //  -Dsonar.projectVersion= 0.1 \
-                        //  -Dsonar.sourceEncoding=UTF-8 \
-                        //  -Dsonar.sources=src \
-                        //  -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts,**/dist/**,**/docs/**,**/*.js,**/e2e/**,**/coverage/** \
-                        //  -Dsonar.test=src/app \
-                        //  -Dsonar.test.inclusions=**/*.spec.ts \
-                        //  -Dsonar.ts.tslint.configPath=tslint.json "  
+                        sh "${scannerHome}/bin/sonar-scanner -e \
+                         -Dsonar.projectKey=test_NodeJs_Pipeline \
+                         -Dsonar.projectName= test_NodeJs_Pipeline \
+                         -Dsonar.projectVersion= 0.1 \
+                         -Dsonar.sourceEncoding=UTF-8 \
+                         -Dsonar.sources=src \
+                         -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts,**/dist/**,**/docs/**,**/*.js,**/e2e/**,**/coverage/** \
+                         -Dsonar.test=src/app \
+                         -Dsonar.test.inclusions=**/*.spec.ts \
+                         -Dsonar.ts.tslint.configPath=tslint.json "  
                 }
 
         }
