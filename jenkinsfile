@@ -1,6 +1,6 @@
 // This shows a simple example of how to archive the build output artifacts.
 node {
-        stage('Checkout repository'){
+        stage('SCM'){
                 git branch: 'development', url: 'https://github.com/manfer993/portafolio.git'
         }
         stage('Install node modules'){
@@ -23,8 +23,13 @@ node {
                          -Dsonar.test.inclusions=**/*.spec.ts \
                          -Dsonar.ts.tslint.configPath=tslint.json "  
                 }
-
         }
+        stage('docker build/push') {
+                docker.withRegistry('https://index.docker.io/v1/', 'dockerHub') {
+                        def app = docker.build("ferman18/myapp:${BUILD_NUMBER}", '.').push()
+                }
+        }
+
 //        stage('Deploy'){
 //                sh "pm2 restart all"
 //        }
