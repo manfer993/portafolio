@@ -12,7 +12,7 @@ node {
         stage('sonar-scanner') {
                 def scannerHome = tool name: 'sonarqube 3.3.0', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                 withSonarQubeEnv('sonarqube_dev') {
-                        sh "${scannerHome}/bin/sonar-scanner -e \
+                        sh "${scannerHome}/bin/sonar-scanner \
                          -Dsonar.projectKey=test_NodeJs_Pipeline \
                          -Dsonar.projectName= test_NodeJs_Pipeline \
                          -Dsonar.projectVersion= 0.1 \
