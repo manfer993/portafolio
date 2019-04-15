@@ -14,8 +14,8 @@ node {
                 withSonarQubeEnv('sonarqube_dev') {
                         sh "${scannerHome}/bin/sonar-scanner \
                          -Dsonar.projectKey=test_NodeJs_Pipeline \
-                         -Dsonar.projectName= test_NodeJs_Pipeline \
-                         -Dsonar.projectVersion= 0.1 \
+                         -Dsonar.projectName=test_NodeJs_Pipeline \
+                         -Dsonar.projectVersion=0.1 \
                          -Dsonar.sourceEncoding=UTF-8 \
                          -Dsonar.sources=src \
                          -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts,**/dist/**,**/docs/**,**/*.js,**/e2e/**,**/coverage/** \
