@@ -25,18 +25,18 @@ node {
                 }
         }
         stage('docker build/push') {
-                dockerBuildAndPublish {
-                        repositoryName('ferman18/nodejs_app_dev')
-                        tag('${BUILD_NUMBER}')
-                        registryCredentials('dockerHub')
-                        forcePull(false)
-                        forceTag(false)
-                        createFingerprints(false)
-                        skipDecorate()
-                }  
-                // docker.withRegistry('https://index.docker.io/v1/','dockerHub') {
-                //         def app = docker.build("ferman18/nodejs_app_dev:${BUILD_NUMBER}", '.').push()
-                // }
+                // dockerBuildAndPublish {
+                //         repositoryName('ferman18/nodejs_app_dev')
+                //         tag('${BUILD_NUMBER}')
+                //         registryCredentials('dockerHub')
+                //         forcePull(false)
+                //         forceTag(false)
+                //         createFingerprints(false)
+                //         skipDecorate()
+                // }  
+                docker.withRegistry('https://index.docker.io/v1/','dockerHub') {
+                        def app = docker.build("ferman18/nodejs_app_dev:${BUILD_NUMBER}", '.').push()
+                }
         }
         
         stage('run docker'){
