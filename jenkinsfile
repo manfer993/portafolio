@@ -41,9 +41,7 @@ node {
         }
         
         stage('run docker'){
-                sh "if [[ -n `docker ps -a | grep portafolioDev` ]];\
-                docker stop portafolioDev && docker rm portafolioDev;\
-                fi"
+                sh "if docker ps -a | grep portafolioDev; docker stop portafolioDev && docker rm portafolioDev; fi"
                 sh "sleep 5"
                 sh "docker run -d -p 8085:80 --name portafolioDev ferman18/nodejs_app_dev:${BUILD_NUMBER}"
         }
