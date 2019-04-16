@@ -13,22 +13,22 @@ node {
                 def scannerHome = tool name: 'sonarqube 3.3.0', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                 withSonarQubeEnv('sonarqube_dev') {
                         sh "${scannerHome}/bin/sonar-scanner \
-                         -Dsonar.projectKey=test_NodeJs_Pipeline \
-                         -Dsonar.projectName=test_NodeJs_Pipeline \
-                         -Dsonar.projectVersion=0.1 \
-                         -Dsonar.sourceEncoding=UTF-8 \
-                         -Dsonar.sources=src \
-                         -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts,**/dist/**,**/docs/**,**/*.js,**/e2e/**,**/coverage/** \
-                         -Dsonar.test=src/app \
-                         -Dsonar.test.inclusions=**/*.spec.ts \
-                         -Dsonar.ts.tslint.configPath=tslint.json "  
+                        -Dsonar.projectKey=test_NodeJs_Pipeline \
+                        -Dsonar.projectName=test_NodeJs_Pipeline \
+                        -Dsonar.projectVersion=0.1 \
+                        -Dsonar.sourceEncoding=UTF-8 \
+                        -Dsonar.sources=src \
+                        -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts,**/dist/**,**/docs/**,**/*.js,**/e2e/**,**/coverage/** \
+                        -Dsonar.test=src/app \
+                        -Dsonar.test.inclusions=**/*.spec.ts \
+                        -Dsonar.ts.tslint.configPath=tslint.json "  
                 }
         }
         stage('docker build/push') {
                 dockerBuildAndPublish {
                         repositoryName('ferman18/nodejs_app_dev')
                         tag('${BUILD_NUMBER}')
-                        registryCredentials('dockerhub')
+                        registryCredentials('dockerHub')
                         forcePull(false)
                         forceTag(false)
                         createFingerprints(false)
@@ -38,7 +38,13 @@ node {
                 //         def app = docker.build("ferman18/nodejs_app_dev:${BUILD_NUMBER}", '.').push()
                 // }
         }
+        
         stage('run docker'){
-                sh "docker run -d -p 8085:80 --name portafolioDev.v${BUILD_NUMBER} ferman18/nodejs_app_dev:${BUILD_NUMBER}"
+                sh "if [[ -n `docker container ls -a | grep portafolioDev` ]]; 
+                then docker container stop portafolioDev && docker container rm portafolioDev; 
+                fi"
+                sleep 5
+                sh "docker run -d -p 8085:80 --name portafolioDev ferman18/nodejs_app_dev:${BUILD_NUMBER}"
         }
+
 }
