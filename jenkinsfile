@@ -25,17 +25,12 @@ node {
                 }
         }
         stage('Push image') {
-                docker.withRegistry( 'https://registry.hub.docker.com', 'dockerHub' ) {
+                docker.withRegistry( 'https://ferman18/nodejs_app_dev', 'dockerHub' ) {
                         def dockerImage = docker.build("ferman18/nodejs_app_dev:${BUILD_NUMBER}")
+                        // def dockerImage = docker.build("ferman18/nodejs_app_dev:${BUILD_NUMBER}", '.')
                         dockerImage.push()
                 }
         }
-        // stage('docker build/push') {
-        //         docker.withRegistry('https://registry.hub.docker.com', ){
-        //                 def app = docker.build(":${BUILD_NUMBER}", '.')
-        //                 app.push()
-        //         }
-        // }
         stage('Validate container existence'){
                 sh "if docker ps -a | grep portafolioDev; then docker stop portafolioDev && docker rm portafolioDev; fi"
                 sh "sleep 5"
