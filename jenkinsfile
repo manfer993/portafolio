@@ -1,5 +1,6 @@
 // This shows a simple example of how to archive the build output artifacts.
 node {
+        def dockerImage
         stage('SCM'){
                 git branch: 'development', url: 'https://github.com/manfer993/portafolio.git'
         }
@@ -24,11 +25,12 @@ node {
                         -Dsonar.ts.tslint.configPath=tslint.json "  
                 }
         }
+        stage('Build image'){
+                dockerImage = docker.build("ferman18/nodejs_app_dev")
+        }
         stage('Push image') {
-                docker.withRegistry( 'https://ferman18/nodejs_app_dev', 'dockerHub' ) {
-                        def dockerImage = docker.build("ferman18/nodejs_app_dev:${BUILD_NUMBER}")
-                        // def dockerImage = docker.build("ferman18/nodejs_app_dev:${BUILD_NUMBER}", '.')
-                        dockerImage.push()
+                docker.withRegistry( 'https://registry.hub.docker.com', 'dockerHub' ) {
+                        dockerImage.push("${BUILD_NUMBER}")
                 }
         }
         stage('Validate container existence'){
