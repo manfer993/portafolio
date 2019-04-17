@@ -29,17 +29,17 @@ node {
                 dockerImage = docker.build("ferman18/nodejs_app_dev")
                 sh "docker logout"
         }
-        stage('Push image') {
-                docker.withDockerServer( 'https://index.docker.io/v1/', 'dockerHub' ) {
-                        dockerImage.push("${BUILD_NUMBER}")
-                }
-        }
+        // stage('Push image') {
+        //         docker.withRegistry( 'https://index.docker.io/v1/', 'dockerHub' ) {
+        //                 dockerImage.push("${BUILD_NUMBER}")
+        //         }
+        // }
         stage('Validate container existence'){
                 sh "if docker ps -a | grep portafolioDev; then docker stop portafolioDev && docker rm portafolioDev; fi"
                 sh "sleep 5"
         }
         stage('Create container'){               
-                sh "docker run -d -p 8085:80 --name portafolioDev ferman18/nodejs_app_dev:${BUILD_NUMBER}"
+                sh "docker run -d -p 8085:80 --name portafolioDev ferman18/nodejs_app_dev:latest"
         }
 
 }
