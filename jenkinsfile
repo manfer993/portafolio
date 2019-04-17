@@ -1,20 +1,15 @@
 // This shows a simple example of how to archive the build output artifacts.
 node {
-        environment {
-                repo = "ferman18/nodejs_app_dev"
-                repoCredential = 'dockerHub'
-                dockerImage = ''
-        }
         stage('SCM'){
                 git branch: 'development', url: 'https://github.com/manfer993/portafolio.git'
         }
         stage('Install node modules'){
                 sh "npm install"
         }
-        stage('Build'){
+        stage('Build project'){
                 sh "npm run build"
         }
-        stage('sonar-scanner') {
+        stage('Scan project') {
                 def scannerHome = tool name: 'sonarqube 3.3.0', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                 withSonarQubeEnv('sonarqube_dev') {
                         sh "${scannerHome}/bin/sonar-scanner \
@@ -29,20 +24,10 @@ node {
                         -Dsonar.ts.tslint.configPath=tslint.json "  
                 }
         }
-        stage('Building docker image') {
-                steps{
-                        script {
-                                dockerImage = docker.build repo + ":${BUILD_NUMBER}"
-                        }
-                }
-        }
-        stage('Deploy docker image') {
-                steps{
-                        script {
-                                docker.withRegistry( '', repoCredential ) {
-                                        dockerImage.push()
-                                }
-                        }
+        stage('Push image') {
+                docker.withRegistry( '', 'dockerHub' ) {
+                        def dockerImage = docker.build("ferman18/nodejs_app_dev:${BUILD_NUMBER}")
+                        dockerImage.push()
                 }
         }
         // stage('docker build/push') {
@@ -51,10 +36,11 @@ node {
         //                 app.push()
         //         }
         // }
-        
-        stage('create container'){
+        stage('Validate container existence'){
                 sh "if docker ps -a | grep portafolioDev; then docker stop portafolioDev && docker rm portafolioDev; fi"
                 sh "sleep 5"
+        }
+        stage('Create container'){               
                 sh "docker run -d -p 8085:80 --name portafolioDev ferman18/nodejs_app_dev:${BUILD_NUMBER}"
         }
 
