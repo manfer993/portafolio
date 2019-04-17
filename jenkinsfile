@@ -25,7 +25,7 @@ node {
                 }
         }
         stage('Push image') {
-                docker.withRegistry( '', 'dockerHub' ) {
+                docker.withRegistry( 'https://registry.hub.docker.com', 'dockerHub' ) {
                         def dockerImage = docker.build("ferman18/nodejs_app_dev:${BUILD_NUMBER}")
                         dockerImage.push()
                 }
